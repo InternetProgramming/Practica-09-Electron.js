@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Add a new product</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/journal/bootstrap.min.css">
+</head>
+<body>
+    <form class="p-4">
+        <div class="form-group">
+          <input type="text" id="name" class="form-control" placeholder="Product's Name" autofocus>
+        </div>
+        <div class="form-group">
+          <input type="text" id="price" class="form-control" placeholder="Price">
+        </div>
+        <div class="form-group">
+          <input type="text" id="description" class="form-control" placeholder="Description">
+        </div>
+        <button class="btn btn-primary btn-block" onclick="clickCreateProduct()">
+          Save
+        </button>
+      </form>
+
+    <script>
+
+        const { ipcRenderer } = require('electron');
+
+        const form = document.querySelector('form');
+        form.addEventListener('submit', e => {
+        e.preventDefault();
+
+        const nameProduct = document.querySelector('#name').value;
+        const priceProduct = document.querySelector('#price').value;
+        const descProduct = document.querySelector('#description').value;
+
+        const newProduct = {
+            name: nameProduct,
+            price: priceProduct,
+            description: descProduct
+        };
+
+        ipcRenderer.send('product:new', newProduct);
+        });
+
+    </script>
+
+</body>
+</html>
